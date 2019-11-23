@@ -58,6 +58,9 @@ extern "C" {
   extern int Opendp_Init(Tcl_Interp *interp);
 }
 
+static int opendp_argc = 0;
+static char** opendp_argv = 0;
+
 int 
 opendpTclAppInit(Tcl_Interp *interp) {
   if( Tcl_Init(interp) == TCL_ERROR ) {
@@ -75,10 +78,26 @@ opendpTclAppInit(Tcl_Interp *interp) {
   command += "puts \"===========================================================================\"\n";
   
   Tcl_Eval(interp, command.c_str());
+  
+  int argc = opendp_argc;
+  char** argv = opendp_argv;
+ 
+  if( argc == 2 ) {
+    command = "source " + string(argv[1]);
+    Tcl_Eval(interp, command.c_str());
+    return TCL_OK;
+  }
+  else if( argc >= 3) {
+    Tcl_Eval(interp, "opendp_external odp; odp help;");
+    exit(1);
+  }
+
   return TCL_OK;
 }
 
 int main(int argc, char* argv[]) {
+  opendp_argc = argc;
+  opendp_argv = argv;
 
   Tcl_Main(1, argv, opendpTclAppInit);
 /*

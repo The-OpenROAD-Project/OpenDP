@@ -59,13 +59,14 @@ bool circuit::check_legality() {
   ofstream log("../logdir/check_legality.log");
   cout << " ==== CHECK LEGALITY ==== " << endl;
 
-  row_check(log);
-  site_check(log);
-  power_line_check(log);
-  edge_check(log);
-  placed_check(log);
-  overlap_check(log);
-  return false;
+  bool legal = true;
+  legal &= row_check(log);
+  legal &= site_check(log);
+  legal &= power_line_check(log);
+  legal &= edge_check(log);
+  legal &= placed_check(log);
+  legal &= overlap_check(log);
+  return legal;
 }
 
 void circuit::local_density_check(double unit, double target_Ut) {
@@ -260,7 +261,7 @@ void circuit::local_density_check(double unit, double target_Ut) {
   return;
 }
 
-void circuit::row_check(ofstream& log) {
+bool circuit::row_check(ofstream& log) {
   bool valid = true;
   int count = 0;
   for(int i = 0; i < cells.size(); i++) {
@@ -279,10 +280,10 @@ void circuit::row_check(ofstream& log) {
   else
     cout << " row_check ==>> PASS " << endl;
 
-  return;
+  return valid;
 }
 
-void circuit::site_check(ofstream& log) {
+bool circuit::site_check(ofstream& log) {
   bool valid = true;
   int count = 0;
   for(int i = 0; i < cells.size(); i++) {
@@ -299,10 +300,10 @@ void circuit::site_check(ofstream& log) {
     cout << " site_check ==>> FAIL (" << count << ")" << endl;
   else
     cout << " site_check ==>> PASS " << endl;
-  return;
+  return valid;
 }
 
-void circuit::edge_check(ofstream& log) {
+bool circuit::edge_check(ofstream& log) {
   bool valid = true;
   int count = 0;
 
@@ -361,10 +362,10 @@ void circuit::edge_check(ofstream& log) {
     cout << " edge_check ==>> FAIL (" << count << ")" << endl;
   else
     cout << " edge_check ==>> PASS " << endl;
-  return;
+  return valid;
 }
 
-void circuit::power_line_check(ofstream& log) {
+bool circuit::power_line_check(ofstream& log) {
   bool valid = true;
   int count = 0;
   for(int i = 0; i < cells.size(); i++) {
@@ -412,10 +413,10 @@ void circuit::power_line_check(ofstream& log) {
     cout << " power_check ==>> FAIL (" << count << ")" << endl;
   else
     cout << " power_check ==>> PASS " << endl;
-  return;
+  return valid;
 }
 
-void circuit::placed_check(ofstream& log) {
+bool circuit::placed_check(ofstream& log) {
   bool valid = true;
   int count = 0;
   for(int i = 0; i < cells.size(); i++) {
@@ -432,10 +433,10 @@ void circuit::placed_check(ofstream& log) {
   else
     cout << " placed_check ==>> PASS " << endl;
 
-  return;
+  return valid;
 }
 
-void circuit::overlap_check(ofstream& log) {
+bool circuit::overlap_check(ofstream& log) {
   bool valid = true;
   int row = rows.size();
   pixel** grid_2;
@@ -509,5 +510,5 @@ void circuit::overlap_check(ofstream& log) {
     cout << " overlap_check ==>> FAIL " << endl;
   else
     cout << " overlap_check ==>> PASS " << endl;
-  return;
+  return valid;
 }
