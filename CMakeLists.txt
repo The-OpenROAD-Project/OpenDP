@@ -93,7 +93,7 @@ set_target_properties( opendplib
 add_custom_command(OUTPUT ${OPENDP_HOME}/src/opendp_wrap.cpp
   COMMAND ${SWIG_EXECUTABLE} -tcl8 -c++ -o ${OPENDP_HOME}/src/opendp_wrap.cpp ${OPENDP_HOME}/src/opendp.i   
   WORKING_DIRECTORY ${OPENDP_HOME}
-  DEPENDS ${OPENDP_SWIG_FILES}
+  DEPENDS ${OPENDP_SWIG_FILES} src/opendp_external.h  
 )
 
 add_executable( opendp
