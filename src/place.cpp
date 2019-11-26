@@ -259,7 +259,7 @@ void circuit::group_cell_placement(string mode, string mode2) {
       if(theMacro->isMulti == true) {
         multi_pass = map_move(theCell, mode);
         if(multi_pass == false) {
-          cout << "map_move fail" << endl;
+          cout << "map_move fail (multi cell)" << endl;
           break;
         }
       }
@@ -277,8 +277,7 @@ void circuit::group_cell_placement(string mode, string mode2) {
         if(theMacro->isMulti == false) {
           single_pass = map_move(theCell, mode);
           if(single_pass == false) {
-            //						cout << "map_move fail" <<
-            //endl;
+            cout << "map_move fail (single cell)" << endl;
             break;
           }
         }

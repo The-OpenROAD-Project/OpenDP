@@ -851,6 +851,13 @@ int CircuitParser::DefSNetCbk(
   return 0;
 }
 
+
+static double updateCoordiProject(double& val, double coreMin, double coreMax) {
+  val -= coreMin;
+  val = (val < 0)? 0 : val; 
+  val = (val > coreMax - coreMin)? coreMax - coreMin: val;
+}
+
 // Fence region handling
 // DEF's REGIONS -> call groups
 int CircuitParser::DefRegionCbk(
@@ -869,17 +876,24 @@ int CircuitParser::DefRegionCbk(
 
   for(int i = 0; i < re->numRectangles(); i++) {
     opendp::rect tmpRect;
-    tmpRect.xLL = re->xl(i);
+    tmpRect.xLL = re->xl(i); 
     tmpRect.yLL = re->yl(i);
     tmpRect.xUR = re->xh(i);
-    tmpRect.yUR = re->yh(i); 
+    tmpRect.yUR = re->yh(i);
+
+    updateCoordiProject ( tmpRect.xLL, ckt->core.xLL, ckt->core.xUR);
+    updateCoordiProject ( tmpRect.xUR, ckt->core.xLL, ckt->core.xUR);
+    updateCoordiProject ( tmpRect.yLL, ckt->core.yLL, ckt->core.yUR);
+    updateCoordiProject ( tmpRect.yUR, ckt->core.yLL, ckt->core.yUR);
     
     // Extract BB
     curGroup->boundary.xLL = min(curGroup->boundary.xLL, tmpRect.xLL);
     curGroup->boundary.yLL = min(curGroup->boundary.yLL, tmpRect.yLL);
     curGroup->boundary.xUR = max(curGroup->boundary.xUR, tmpRect.xUR);
     curGroup->boundary.yUR = max(curGroup->boundary.yUR, tmpRect.yUR);
-    
+   
+    // tmpRect.print();
+
     // push rect info
     curGroup->regions.push_back( tmpRect );
   }

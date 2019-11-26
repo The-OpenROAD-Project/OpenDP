@@ -73,7 +73,7 @@
 
 namespace opendp {
 
-enum power { VDD, VSS };
+enum power { undefined, VDD, VSS };
 
 struct rect {
   double xLL, yLL;

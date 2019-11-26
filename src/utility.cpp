@@ -60,15 +60,44 @@ using std::string;
 
 
 void circuit::power_mapping() {
+  macro *myMacro = NULL;
+  power macroTopPower = undefined;
+  for(int i=0; macros.size(); i++ ) {
+    myMacro = &macros[i];
+    if( !myMacro->isMulti && myMacro->top_power != power::undefined ) {
+      macroTopPower = myMacro->top_power;
+      break;
+    }
+  }
+  power oppositePower = undefined;
+  if( macroTopPower == power::undefined ) {
+    cout << "ERROR: Cannot align VDD/VSS alignments." << endl;
+    exit(1);
+  }
+  else if( macroTopPower == VDD) {
+    oppositePower = VSS;
+  }
+  else if( macroTopPower == VSS) {
+    oppositePower = VDD;
+  }
+
   for(int i = 0; i < rows.size(); i++) {
     row* theRow = &rows[i];
-    if(initial_power == VDD) {
+    if( initial_power == undefined ) {
+      if( i % 2 == 0 ) {
+        theRow->top_power = macroTopPower;
+      }
+      else {
+        theRow->top_power = oppositePower;
+      }
+    }
+    else if(initial_power == VDD) {
       if(i % 2 == 0)
         theRow->top_power = VDD;
       else
         theRow->top_power = VSS;
     }
-    else {
+    else if( initial_power == VSS ){
       if(i % 2 == 0)
         theRow->top_power = VSS;
       else
@@ -567,7 +596,9 @@ pair< bool, pair< int, int > > circuit::bin_search(int x_pos, cell* theCell,
       else {
         for(int k = y; k < y + y_step; k++) {
           for(int l = x + i; l < x + i + x_step; l++) {
+            // cout << "BinSearch: chk " << k << " " << l << endl;
             if(grid[k][l].linked_cell != NULL || grid[k][l].isValid == false) {
+              // cout << "BinSearch: chk " << k << " " << l << " NonEmpty" << endl;
               available = false;
               break;
             }
@@ -589,6 +620,8 @@ pair< bool, pair< int, int > > circuit::bin_search(int x_pos, cell* theCell,
         else
           pos = make_pair(y, x + i + edge_left);
 
+        // cout << "Bin Search Success: " << pos.first << " " << pos.second 
+        // << " edgeLeft: " << edge_left << endl;
         return make_pair(available, pos);
       }
     }
@@ -691,6 +724,7 @@ pair< bool, pixel* > circuit::diamond_search(cell* theCell, int x_coord,
   found = bin_search(x_pos, theCell, min(x_end, max(x_start, x_pos)),
                      max(y_start, min(y_end, y_pos)));
   if(found.first == true) {
+    // cout << "DiamondSearch: found: " << found.second.first << " - " << found.second.second << endl;
     myPixel = &grid[found.second.first][found.second.second];
     return make_pair(found.first, myPixel);
   }

@@ -135,5 +135,6 @@ if sys.argv[1] == "run":
   #NangateRun(iccadList)
   Run("simple", simpleList)
   Run("simple", lowUtilList)
+  Run("simple", fenceList)
 elif sys.argv[1] == "get":
   ExecuteCommand("watch -n 3 \"grep -r '' *-test*/exp/*.rpt\"")
