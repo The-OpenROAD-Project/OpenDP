@@ -159,14 +159,10 @@ circuit::make_rows()
     }
 
     // initialize rowHeight variable (double)
-    if( fabs(rowHeight - 0.0f) <= DBL_EPSILON ) {
-      rowHeight = row.site->getHeight();
-    }
+    rowHeight = row.site->getHeight();
 
     // initialize wsite variable (int)
-    if( wsite == 0 ) {
-      wsite = row.site->getWidth();
-    }
+    wsite = row.site->getWidth();
   
     core.xLL = min(1.0*row.origX, core.xLL);
     core.yLL = min(1.0*row.origY, core.yLL);
@@ -278,4 +274,4 @@ swapWidthHeight(dbOrientType orient ) {
   }
 }
 
-}
+} // namespace

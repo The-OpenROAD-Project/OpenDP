@@ -5,6 +5,7 @@
 *.swp
 */**/*.o
 *.rpt
+*.rej
 test/*/exp
 TAGS
 
