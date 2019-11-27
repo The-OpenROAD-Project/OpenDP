@@ -37,7 +37,7 @@
 
 #include "circuit.h"
 #include <cmath>
-//#include <iomanip>
+#include <iomanip>
 
 #define _DEBUG
 
