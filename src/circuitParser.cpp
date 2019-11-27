@@ -455,8 +455,10 @@ int CircuitParser::DefEndCbk(
   circuit* ckt = (circuit*) ud;
   switch(c) {
     case defrSNetEndCbkType:
+//      cout << "ckt->minVddCoordi: " << ckt->minVddCoordiY << endl;
       // fill initial_power information
       if( (int(ckt->minVddCoordiY+0.5f) / int(ckt->rowHeight+0.5f)) % 2 == 0 ) {
+      
         ckt->initial_power = VDD; 
       }
       else {
@@ -791,7 +793,7 @@ int CircuitParser::DefSNetCbk(
 
   // Check the VDD values
   if( strcmp("vdd", swire->name()) == 0 ||
-      strcmp("VDD", swire->name()) ) {
+      strcmp("VDD", swire->name()) == 0 ) {
     if( swire->numWires() ) {
       for(int i=0; i<swire->numWires(); i++) {
         defiWire* wire = swire->wire(i);

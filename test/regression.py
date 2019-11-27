@@ -107,11 +107,11 @@ if len(sys.argv) <= 1:
   sys.exit(0)
 
 dirList = os.listdir(".")
-nangateList = []
-iccadList = []
 simpleList = []
 lowUtilList = []
 fenceList = []
+multiList = []
+iccadList = []
 edgeTypeList = []
 for cdir in sorted(dirList):
   if os.path.isdir(cdir) == False:
@@ -119,8 +119,8 @@ for cdir in sorted(dirList):
 
   if "iccad17-test" in cdir:
     iccadList.append(cdir)
-  if "nangate45-test" in cdir:
-    nangateList.append(cdir)
+  if "multi-height-test" in cdir:
+    multiList.append(cdir)
   if "simple-test" in cdir:
     simpleList.append(cdir)
   if "low-util-test" in cdir:
@@ -134,7 +134,8 @@ if sys.argv[1] == "run":
   #NangateRun(nangateList)
   #NangateRun(iccadList)
   Run("simple", simpleList)
-  Run("simple", lowUtilList)
   Run("simple", fenceList)
+  Run("simple", multiList)
+  Run("simple", lowUtilList)
 elif sys.argv[1] == "get":
   ExecuteCommand("watch -n 3 \"grep -r '' *-test*/exp/*.rpt\"")
