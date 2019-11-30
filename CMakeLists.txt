@@ -6,10 +6,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(OpenDP)
 
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-
 find_package(SWIG REQUIRED)
-find_package(TCL REQUIRED)
 
 set(OPENDP_WRAP ${CMAKE_CURRENT_BINARY_DIR}/opendp_wrap.cc)
 set(OPENDP_TCL_INIT ${CMAKE_CURRENT_BINARY_DIR}/OpendpTclInitVar.cc)
