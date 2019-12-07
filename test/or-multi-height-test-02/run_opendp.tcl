@@ -3,13 +3,13 @@ set design ten_cells_multi
 
 set TIME_start [clock clicks -milliseconds]
 
-set odp [opendp_external]
+set odp [get_opendp]
 read_lef iccad17-bench/des_perf_a_md1/tech.lef
 read_lef iccad17-bench/des_perf_a_md1/cells_modified.lef
 read_def ${exp_folder}/${design}.def
 
 
-
+legalize_placement
 
 
 

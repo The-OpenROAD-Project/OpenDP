@@ -3,11 +3,11 @@ set design ibex_core
 
 set TIME_start [clock clicks -milliseconds]
 
-set odp [opendp_external]
+set odp [get_opendp]
 read_lef nangate45-bench/tech/NangateOpenCellLibrary.lef
 read_def nangate45-bench/${design}/${design}_replace.def
 
-
+legalize_placement
 
 set TIME_taken [expr [clock clicks -milliseconds] - $TIME_start]
 

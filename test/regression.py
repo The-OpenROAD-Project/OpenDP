@@ -137,8 +137,8 @@ for cdir in sorted(dirList):
 
 if sys.argv[1] == "run":
   if len(sys.argv) >= 3 and sys.argv[2] == "openroad":
-    #Run("simple", prog, openroadList)
-    Run("simple", "./openroad", openroadList)
+    Run("simple", prog, openroadList)
+    # Run("simple", "./openroad", openroadList)
   else:
     Run("simple", "./opendp", simpleList)
     Run("simple", "./opendp", fenceList)

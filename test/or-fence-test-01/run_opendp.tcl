@@ -3,12 +3,12 @@ set design ten_cells_fence
 
 set TIME_start [clock clicks -milliseconds]
 
-set odp [opendp_external]
+set odp [get_opendp]
 read_lef nangate45-bench/tech/NangateOpenCellLibrary.lef
 read_def ${exp_folder}/${design}.def
 
 
-
+legalize_placement
 
 
 

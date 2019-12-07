@@ -32,14 +32,14 @@ def ModifyCont(folderName, newFileName):
     if curLine.find('odp init_opendp') is not -1:
       tclCont[idx] = curLine = "" 
     if curLine.find('odp legalize_place') is not -1:
-      tclCont[idx] = curLine = "" 
+      tclCont[idx] = curLine = "legalize_placement" 
     if curLine.find('odp export_def') is not -1:
       tclCont[idx] = curLine = "" 
     if curLine.find('set exp') is not -1:
       tclCont[idx] = curLine = "set exp_folder " + folderName 
     
     if curLine.find('opendp_external odp') is not -1:
-      tclCont[idx] = curLine = "set odp [opendp_external]" 
+      tclCont[idx] = curLine = "set odp [get_opendp]" 
     elif curLine.find('odp') is not -1:
       tclCont[idx] = curLine = curLine.replace("odp", "$odp")
   
