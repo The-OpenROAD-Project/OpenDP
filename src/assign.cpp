@@ -73,11 +73,11 @@ void circuit::fixed_cell_assign() {
       x_end = min(x_end, x_end_rf);
 
 #ifdef DEBUG
-      cout << " cell_name : " << theCell->name << endl;
-      cout << " y_start : " << y_start << endl;
-      cout << " y_end   : " << y_end << endl;
-      cout << " x_start : " << x_start << endl;
-      cout << " x_end   : " << x_end << endl;
+      cout << "FixedCellAssign: cell_name : " << theCell->name << endl;
+      cout << "FixedCellAssign: y_start : " << y_start << endl;
+      cout << "FixedCellAssign: y_end   : " << y_end << endl;
+      cout << "FixedCellAssign: x_start : " << x_start << endl;
+      cout << "FixedCellAssign: x_end   : " << x_end << endl;
 #endif
       for(int j = y_start; j < y_end; j++) {
         for(int k = x_start; k < x_end; k++) {
@@ -299,6 +299,7 @@ void circuit::group_pixel_assign_2() {
   return;
 }
 
+
 void circuit::group_pixel_assign() {
   for(int i = 0; i < rows.size(); i++) {
     row* theRow = &rows[i];
@@ -311,16 +312,21 @@ void circuit::group_pixel_assign() {
     group* theGroup = &groups[i];
     for(int j = 0; j < theGroup->regions.size(); j++) {
       rect* theRect = &theGroup->regions[j];
+      // theRect->print();
       int row_start = (int)ceil(theRect->yLL / rowHeight);
       int row_end = (int)floor(theRect->yUR / rowHeight);
-
+    
       // assert((int)floor(theRect->yUR) % (int)rowHeight == 0 );
 
       for(int k = row_start; k < row_end; k++) {
         row* theRow = &rows[k];
-        int col_start = (int)floor(theRect->xLL / (double)theRow->stepX);
-        int col_end = (int)ceil(theRect->xUR / (double)theRow->stepX);
-
+        int col_start = (int)ceil(theRect->xLL / (double)theRow->stepX);
+        int col_end = (int)floor(theRect->xUR / (double)theRow->stepX);
+//        cout << "col_start_prev: " << theRect->xLL / theRow->stepX << endl;
+//        cout << "col_start: " << (int)ceil(theRect->xLL / (double)theRow->stepX) << endl;
+//        cout << "col_end_prev: " << theRect->xUR / theRow->stepX << endl;
+//        cout << "col_end: " << (int)floor(theRect->xUR / (double)theRow->stepX) << endl;
+      
         for(int l = col_start; l < col_end; l++) {
           grid[k][l].util += 1.0;
         }
@@ -340,17 +346,22 @@ void circuit::group_pixel_assign() {
       rect* theRect = &theGroup->regions[j];
       int row_start = (int)ceil(theRect->yLL / rowHeight);
       int row_end = (int)floor(theRect->yUR / rowHeight);
+      
       for(int k = row_start; k < row_end; k++) {
         row* theRow = &rows[k];
-        int col_start = (int)floor(theRect->xLL / (double)theRow->stepX);
-        int col_end = (int)ceil(theRect->xUR / (double)theRow->stepX);
-        // assig groupid to each pixel ( grid )
+        int col_start = (int)ceil(theRect->xLL / (double)theRow->stepX);
+        int col_end = (int)floor(theRect->xUR / (double)theRow->stepX);
+        
+        // assign groupid to each pixel ( grid )
         for(int l = col_start; l < col_end; l++) {
           if(abs(grid[k][l].util - 1.0) < 1e-6) {
             grid[k][l].pixel_group = theGroup;
-            grid[k][l].linked_cell = NULL;
+            
+            // Can have FIXED cells, so no need to initialize as NULL
+            // grid[k][l].linked_cell = NULL;
             grid[k][l].isValid = true;
             grid[k][l].util = 1.0;
+            // cout << "GroupPixelAssign: " << k << " " << l << " cleanned." << endl;
           }
           else if(grid[k][l].util > 0 && grid[k][l].util < 1) {
 #ifdef DEBUG2

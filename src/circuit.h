@@ -80,7 +80,7 @@ using odb::dbInst;
 using odb::dbMTerm;
 using odb::dbOrientType;
 
-enum power { VDD, VSS };
+enum power { undefined, VDD, VSS };
 
 struct rect {
   double xLL, yLL;
@@ -337,12 +337,12 @@ class circuit {
 
   bool check_legality();
   void local_density_check(double unit, double target_Ut);
-  void row_check(std::ofstream& os);
-  void site_check(std::ofstream& os);
-  void edge_check(std::ofstream& os);
-  void power_line_check(std::ofstream& os);
-  void placed_check(std::ofstream& log);
-  void overlap_check(std::ofstream& os);
+  bool row_check(std::ofstream& os);
+  bool site_check(std::ofstream& os);
+  bool edge_check(std::ofstream& os);
+  bool power_line_check(std::ofstream& os);
+  bool placed_check(std::ofstream& log);
+  bool overlap_check(std::ofstream& os);
 };
 
 // parser_helper.cpp

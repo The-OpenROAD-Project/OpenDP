@@ -1,4 +1,5 @@
 #include "circuit.h"
+#include <cfloat>
 
 using std::cout;
 using std::endl;
@@ -23,7 +24,11 @@ void rect::print() {
 macro::macro()
   : isMulti(false),
     edgetypeLeft(0),
-    edgetypeRight(0) {
+    edgetypeRight(0),
+    top_power(power::undefined) {
+#ifdef USE_GOOGLE_HASH
+  pins.set_empty_key(INITSTR);
+#endif
 }
 
 void macro::print() {
@@ -103,6 +108,10 @@ circuit::circuit()
     num_cpu(1),
     DEFdist2Microns(0),
     sum_displacement(0.0),
+    max_displacement(0.0),
+    avg_displacement(0.0),
+    minVddCoordiY(DBL_MAX),
+    initial_power(power::undefined),
     displacement(400.0),
     max_disp_const(0.0),
     max_utilization(100.0),

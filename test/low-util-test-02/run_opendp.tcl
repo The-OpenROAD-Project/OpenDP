@@ -1,4 +1,4 @@
-set exp_folder ./exp
+set exp_folder low-util-test-02 
 set design aes_cipher_top 
 
 set TIME_start [clock clicks -milliseconds]
@@ -11,11 +11,7 @@ odp legalize_place
 
 set TIME_taken [expr [clock clicks -milliseconds] - $TIME_start]
 
-if {![file exists $exp_folder/]} {
-  exec mkdir $exp_folder
-}
-
-set fp [open ./exp/${design}.rpt w]
+set fp [open ${exp_folder}/${design}.rpt w]
 set legality [odp check_legality]
 
 puts $fp "Legality          : $legality"
@@ -28,4 +24,4 @@ puts $fp "Legalized HPWL    : [odp get_legalized_hpwl]"
 
 close $fp
 
-
+exit
