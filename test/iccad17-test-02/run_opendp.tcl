@@ -3,11 +3,11 @@ set design des_perf_a_md2
 
 set TIME_start [clock clicks -milliseconds]
 
-read_lef -tech ../iccad17-bench/${design}/tech.lef
-read_lef ../iccad17-bench/${design}/cells_modified.lef
-read_def ../iccad17-bench/${design}/placed.def
-
 opendp_external odp
+odp import_lef iccad17-bench/${design}/tech.lef
+odp import_lef iccad17-bench/${design}/cells_modified.lef
+odp import_def iccad17-bench/${design}/placed.def
+
 odp import_constraint ../iccad17-bench/${design}/placement.constraints
 odp legalize_place
 
