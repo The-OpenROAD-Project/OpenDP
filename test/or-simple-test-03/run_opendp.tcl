@@ -1,4 +1,4 @@
-set exp or-simple-test-03
+set exp_folder or-simple-test-03
 set design single_cell 
 
 set TIME_start [clock clicks -milliseconds]

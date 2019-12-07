@@ -1,4 +1,4 @@
-set exp or-simple-test-06
+set exp_folder or-simple-test-06
 set design ten_cells 
 
 set TIME_start [clock clicks -milliseconds]

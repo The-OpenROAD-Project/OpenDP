@@ -9,7 +9,7 @@ def Run(mode, curList):
   for curCase in curList:
     copyCase = "or-%s" % (curCase)
     # copy testcases
-    # ExecuteCommand("cp -r %s %s" % (curCase, copyCase))
+    ExecuteCommand("cp -r %s %s" % (curCase, copyCase))
     for cFile in os.listdir(copyCase):
       if cFile.endswith(".tcl") == False:
         continue
@@ -33,8 +33,10 @@ def ModifyCont(folderName, newFileName):
       tclCont[idx] = curLine = "" 
     if curLine.find('odp legalize_place') is not -1:
       tclCont[idx] = curLine = "" 
+    if curLine.find('odp export_def') is not -1:
+      tclCont[idx] = curLine = "" 
     if curLine.find('set exp') is not -1:
-      tclCont[idx] = curLine = "set exp " + folderName 
+      tclCont[idx] = curLine = "set exp_folder " + folderName 
     
     if curLine.find('opendp_external odp') is not -1:
       tclCont[idx] = curLine = "set odp [opendp_external]" 
@@ -54,8 +56,6 @@ for cdir in sorted(dirList):
   if cdir.startswith("or-"):
     continue
   
-  if "iccad17-test" in cdir:
-    targetList.append(cdir)
   if "multi-height-test" in cdir:
     targetList.append(cdir)
   if "simple-test" in cdir:
