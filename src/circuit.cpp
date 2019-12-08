@@ -145,7 +145,7 @@ circuit::update_db_inst_locations()
     int x = IntConvert(cell->x_coord + core.xLL);
     int y = IntConvert(cell->y_coord + core.yLL);
     dbInst *db_inst = cell->db_inst;
-    db_inst->setOrigin(x, y);
+    db_inst->setLocation(x, y);
     // Orientation is already set.
   }
 }
