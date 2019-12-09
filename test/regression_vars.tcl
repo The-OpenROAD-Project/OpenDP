@@ -128,6 +128,7 @@ record_resizer_tests {
   simple-test-05
   simple-test-06
   simple-test-07
+  fence-test-01
 }
 
 # Record tests in $STAX/designs
