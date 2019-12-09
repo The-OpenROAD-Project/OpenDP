@@ -1,0 +1,39 @@
+Notice 0: Reading LEF file:  nangate45-bench/tech/NangateOpenCellLibrary.lef
+Notice 0:     Created 22 technology layers
+Notice 0:     Created 27 technology vias
+Notice 0:     Created 134 library cells
+Notice 0: Finished LEF file:  nangate45-bench/tech/NangateOpenCellLibrary.lef
+Notice 0: 
+Reading DEF file: simple-test-02.def
+Notice 0: Design: single_cell
+Notice 0:     Created 2 pins.
+Notice 0:     Created 1 components and 4 component-terminals.
+Notice 0:     Created 2 nets and 2 connections.
+Notice 0: Finished DEF file: simple-test-02.def
+CoreArea: 
+28000.000000 : 28000.000000 - 39780.000000 : 33600.000000
+DieArea: 
+0.000000 : 0.000000 - 11780.000000 : 5600.000000
+ non_group_cell_region_assign done ..
+ - - - - - - - - - - - - - - - - - - - - - - - - 
+ non_group_cell_placement done .. 
+ - - - - - - - - - - - - - - - - - - - - - - - - 
+ ==== CHECK LEGALITY ==== 
+ row_check ==>> PASS 
+ site_check ==>> PASS 
+ power_check ==>> PASS 
+ edge_check ==>> PASS 
+ placed_check ==>> PASS 
+ overlap_check ==>> PASS 
+-------------------- DESIGN ANALYSIS ------------------------------
+  total cells              : 1
+  multi cells              : 0
+  fixed cells              : 0
+  total nets               : 2
+  design area              : 6.5968e+07
+  total f_area             : 0
+  total m_area             : 7.448e+06
+  design util              : 11.2903
+  num rows                 : 2
+  row height               : 2800
+-------------------------------------------------------------------
