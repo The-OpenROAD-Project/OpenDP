@@ -1,4 +1,3 @@
-# Resizer, LEF/DEF gate resizer
 # Copyright (c) 2019, Parallax Software, Inc.
 # 
 # This program is free software: you can redistribute it and/or modify
@@ -18,9 +17,6 @@
 
 # Application program to run tests on.
 set app "openroad"
-set resizer_dir [find_parent_dir $test_dir]
-set openroad_src_dir [find_parent_dir $resizer_dir]
-set openroad_dir [find_parent_dir $openroad_src_dir]
 set app_path [file join $openroad_dir "build" "src" $app]
 # Application options.
 set app_options "-no_init -no_splash -exit"
