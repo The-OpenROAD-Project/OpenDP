@@ -128,10 +128,6 @@ record_resizer_tests {
   low-util-test-02
   low-util-test-03
 }
-# removed until the results are stable -cherry
-#  low-util-test-01
-#  low-util-test-02
-#  low-util-test-03
 
 # Record tests in $STAX/designs
 record_test_design {
