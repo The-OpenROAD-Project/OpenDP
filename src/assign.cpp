@@ -415,8 +415,6 @@ bool circuit::paint_pixel(cell* theCell, int x_pos, int y_pos) {
   theCell->y_coord = y_pos * rowHeight;
   theCell->isPlaced = true;
 #ifdef DEBUG
-  if (strcmp(theCell->db_inst->getConstName(),"_318_") == 0)
-    printf("luse\n");
   cout << "paint cell : " << theCell->db_inst->getConstName() << endl;
   cout << "group : " << theCell->cell_group << endl;
   cout << "init_x_coord - init_y_coord : " << theCell->init_x_coord << " - "

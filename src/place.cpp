@@ -53,44 +53,49 @@ using std::vector;
 using std::pair;
 using std::sort;
 using std::make_pair;
+using std::abs;
 
-double disp(cell* theCell) {
+int disp(cell* theCell) {
   return abs(theCell->init_x_coord - theCell->x_coord) +
          abs(theCell->init_y_coord - theCell->y_coord);
 }
 
-bool SortUpOrder(cell* a, cell* b) {
-  if(a->width * a->height > b->width * b->height)
+bool SortUpOrder(cell* cell1, cell* cell2) {
+  int area1 = cell1->width * cell1->height;
+  int area2 = cell2->width * cell2->height;
+  if(area1 > area2)
     return true;
-  else if(a->width * a->height < b->width * b->height)
+  else if(area1 < area2)
+    return false;
+  else if (cell1->dense_factor > cell2->dense_factor)
+    return true;
+  else if (cell1->dense_factor < cell2->dense_factor)
     return false;
   else
-    return (a->dense_factor > b->dense_factor);
-  // return ( disp(a) > disp(b) );
+    return cell1->db_inst->getId() < cell2->db_inst->getId();
 }
 
 bool SortByDisp(cell* a, cell* b) {
-  if(a->disp > b->disp)
-    return true;
-  else
-    return false;
+  return a->disp > b->disp;
 }
 
 bool SortByDense(cell* a, cell* b) {
-  // if( a->dense_factor*a->height > b->dense_factor*b->height )
-  if(a->dense_factor > b->dense_factor)
-    return true;
-  else
-    return false;
+  return a->dense_factor > b->dense_factor;
 }
 
-bool SortDownOrder(cell* a, cell* b) {
-  if(a->width * a->height < b->width * b->height)
+bool SortDownOrder(cell* cell1, cell* cell2) {
+  int area1 = cell1->width * cell1->height;
+  int area2 = cell2->width * cell2->height;
+  if(area1 < area2)
     return true;
-  else if(a->width * a->height > b->width * b->height)
+  else if(area1 > area2)
+    return false;
+  else if (disp(cell1) > disp(cell2))
+    return true;
+  else if (disp(cell1) < disp(cell2))
     return false;
   else
-    return (disp(a) > disp(b));
+    return cell1->db_inst->getId() < cell2->db_inst->getId();
 }
 
 // SIMPLE PLACEMENT ( NOTICE // FUNCTION ORDER SHOULD BE FIXED )
@@ -469,7 +474,7 @@ int circuit::non_group_annealing() {
 }
 
 int circuit::non_group_refine() {
-  vector< pair< double, cell* > > sort_by_disp;
+  vector< pair< int, cell* > > sort_by_disp;
   sort_by_disp.reserve(cells.size());
 
   for(int i = 0; i < cells.size(); i++) {
