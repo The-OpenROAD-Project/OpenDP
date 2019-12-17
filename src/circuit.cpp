@@ -121,29 +121,10 @@ circuit::circuit()
 {
   rows.reserve(4096);
   sub_regions.reserve(100);
-
-#ifdef USE_GOOGLE_HASH
-  macro2id.set_empty_key(
-      INITSTR); /* OPENDP_HASH_MAP between macro name and ID */
-  cell2id.set_empty_key(
-      INITSTR); /* OPENDP_HASH_MAP between cell  name and ID */
-  pin2id.set_empty_key(
-      INITSTR); /* OPENDP_HASH_MAP between pin   name and ID */
-  net2id.set_empty_key(
-      INITSTR); /* OPENDP_HASH_MAP between net   name and ID */
-  row2id.set_empty_key(
-      INITSTR); /* OPENDP_HASH_MAP between row   name and ID */
-  site2id.set_empty_key(
-      INITSTR); /* OPENDP_HASH_MAP between site  name and ID */
-  layer2id.set_empty_key(
-      INITSTR); /* OPENDP_HASH_MAP between layer name and ID */
-  via2id.set_empty_key(INITSTR);
-#endif
 };
 
-// this is brain damage. it should be using std::round -cherry
 int IntConvert(double fp) {
-  return (int)(fp + 0.5f);
+  return (int)std::round(fp);
 }
 
 void

@@ -124,6 +124,9 @@ record_resizer_tests {
   simple-test-05
   simple-test-06
   simple-test-07
+  low-util-test-01
+  low-util-test-02
+  low-util-test-03
 }
 # removed until the results are stable -cherry
 #  low-util-test-01

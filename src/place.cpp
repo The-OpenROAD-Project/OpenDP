@@ -164,10 +164,10 @@ void circuit::non_group_cell_pre_placement() {
         }
       }
     }
-    if(inGroup == true) {
+    if(inGroup) {
       pair< int, int > coord =
           nearest_coord_to_rect_boundary(theCell, target, "init_coord");
-      if(map_move(theCell, coord.first, coord.second) == true)
+      if(map_move(theCell, coord.first, coord.second))
         theCell->hold = true;
     }
   }
@@ -185,17 +185,17 @@ void circuit::group_cell_pre_placement() {
       rect* target;
       for(int k = 0; k < theGroup->regions.size(); k++) {
         rect* theRect = &theGroup->regions[k];
-        if(check_inside(theCell, theRect, "init_coord") == true) inGroup = true;
+        if(check_inside(theCell, theRect, "init_coord")) inGroup = true;
         int temp_dist = dist_for_rect(theCell, theRect, "init_coord");
         if(temp_dist < dist) {
           dist = temp_dist;
           target = theRect;
         }
       }
-      if(inGroup == false) {
+      if(!inGroup) {
         pair< int, int > coord =
             nearest_coord_to_rect_boundary(theCell, target, "init_coord");
-        if(map_move(theCell, coord.first, coord.second) == true)
+        if(map_move(theCell, coord.first, coord.second))
           theCell->hold = true;
       }
     }
@@ -218,7 +218,7 @@ void circuit::non_group_cell_placement(string mode) {
   for(int i = 0; i < cell_list.size(); i++) {
     cell* theCell = cell_list[i];
     macro* theMacro = theCell->cell_macro;
-    if(theMacro->isMulti == true)
+    if(theMacro->isMulti)
       if(!map_move(theCell, mode)) shift_move(theCell, mode);
   }
   for(int i = 0; i < cell_list.size(); i++) {
@@ -263,7 +263,7 @@ void circuit::group_cell_placement(string mode, string mode2) {
       }
     }
     // cout << "Group util : " << theGroup->util << endl;
-    if(multi_pass == true) {
+    if(multi_pass) {
       //				cout << " Group : " << theGroup->name <<
       //" multi-deck placement done - ";
       // place single-deck cells on each group region
@@ -274,17 +274,17 @@ void circuit::group_cell_placement(string mode, string mode2) {
         macro* theMacro = theCell->cell_macro;
         if(!theMacro->isMulti) {
           single_pass = map_move(theCell, mode);
-          if(single_pass == false) {
+          if(single_pass) {
             cout << "map_move fail (single cell)" << endl;
             break;
           }
         }
       }
     }
-    //			if( single_pass == true )
+    //			if( single_pass )
     //				cout << "single-deck placement done" << endl;
 
-    if(single_pass == false || multi_pass == false) {
+    if(!single_pass || !multi_pass) {
       // Erase group cells
       for(int j = 0; j < theGroup->siblings.size(); j++) {
         cell* theCell = theGroup->siblings[j];
@@ -349,7 +349,7 @@ void circuit::brick_placement_1(group* theGroup) {
       y_tar = theRect.yLL;
 
     bool valid = map_move(theCell, x_tar, y_tar);
-    if(valid == false) {
+    if(!valid) {
       cout << "== WARNING !! ==" << endl;
       cout << " Can't place single ( brick place 1 ) " << theCell->db_inst->getConstName() << endl;
     }
@@ -388,7 +388,7 @@ void circuit::brick_placement_2(group* theGroup) {
 
   for(int i = 0; i < sort_by_dist.size(); i++) {
     cell* theCell = sort_by_dist[i].second;
-    if(theCell->hold == true) continue;
+    if(theCell->hold) continue;
     rect theRect = theGroup->regions[theCell->region];
     int x_tar = 0;
     int y_tar = 0;
@@ -401,7 +401,7 @@ void circuit::brick_placement_2(group* theGroup) {
     else
       y_tar = theRect.yLL;
     bool valid = map_move(theCell, x_tar, y_tar);
-    if(valid == false) {
+    if(!valid) {
       cout << "== WARNING !! ==" << endl;
       cout << " Can't place single ( brick place 2 ) " << theCell->db_inst->getConstName() << endl;
     }
@@ -429,9 +429,9 @@ int circuit::group_refine(group* theGroup) {
   int count = 0;
   for(int i = 0; i < sort_by_disp.size() / 20; i++) {
     cell* theCell = sort_by_disp[i].second;
-    if(theCell->hold == true) continue;
+    if(theCell->hold) continue;
 
-    if(refine_move(theCell, "init_coord") == true) count++;
+    if(refine_move(theCell, "init_coord")) count++;
   }
   // cout << " Group refine : " << count << endl;
   return count;
@@ -446,9 +446,9 @@ int circuit::group_annealing(group* theGroup) {
     cell* cellA = theGroup->siblings[rand() % theGroup->siblings.size()];
     cell* cellB = theGroup->siblings[rand() % theGroup->siblings.size()];
 
-    if(cellA->hold == true || cellB->hold == true) continue;
+    if(cellA->hold || cellB->hold) continue;
 
-    if(swap_cell(cellA, cellB) == true) count++;
+    if(swap_cell(cellA, cellB)) count++;
   }
   // cout << " swap cell count : " << count << endl;
   return count;
@@ -460,9 +460,9 @@ int circuit::non_group_annealing() {
   for(int i = 0; i < 100 * cells.size(); i++) {
     cell* cellA = &cells[rand() % cells.size()];
     cell* cellB = &cells[rand() % cells.size()];
-    if(cellA->hold == true || cellB->hold == true) continue;
+    if(cellA->hold || cellB->hold) continue;
 
-    if(swap_cell(cellA, cellB) == true) count++;
+    if(swap_cell(cellA, cellB)) count++;
   }
   // cout << " swap cell count : " << count << endl;
   return count;
@@ -485,8 +485,8 @@ int circuit::non_group_refine() {
   int count = 0;
   for(int i = 0; i < sort_by_disp.size() / 50; i++) {
     cell* theCell = sort_by_disp[i].second;
-    if(theCell->hold == true) continue;
-    if(refine_move(theCell, "init_coord") == true) count++;
+    if(theCell->hold) continue;
+    if(refine_move(theCell, "init_coord")) count++;
   }
   // cout << " nonGroup refine : " << count << endl;
   return count;

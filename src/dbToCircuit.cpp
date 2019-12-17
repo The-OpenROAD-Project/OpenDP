@@ -164,11 +164,13 @@ circuit::make_rows()
     // initialize wsite variable (int)
     wsite = row.site->getWidth();
   
+    // so much brain damage, so little time
     core.xLL = min(1.0*row.origX, core.xLL);
     core.yLL = min(1.0*row.origY, core.yLL);
     core.xUR = max(1.0*row.origX + row.numSites * wsite, core.xUR);
     core.yUR = max(1.0*row.origY + rowHeight, core.yUR);
   }
+  core_.init(core.xLL, core.yLL, core.xUR, core.yUR);
 }
 
 // Y first and X second
@@ -244,8 +246,8 @@ circuit::make_cells()
       // Shift by core.xLL and core.yLL
       int x, y;
       db_inst->getLocation(x, y);
-      cell.init_x_coord = std::max(0.0, x - core.xLL);
-      cell.init_y_coord = std::max(0.0, y - core.yLL);
+      cell.init_x_coord = std::max(0, x - core_.xMin());
+      cell.init_y_coord = std::max(0, y - core_.yMin());
 
       // fixed cells
       if( isFixed(&cell) ) {

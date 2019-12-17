@@ -79,6 +79,7 @@ using odb::dbRow;
 using odb::dbInst;
 using odb::dbMTerm;
 using odb::dbOrientType;
+using odb::adsRect;
 
 enum power { undefined, VDD, VSS };
 
@@ -219,6 +220,7 @@ class circuit {
   double lx, rx, by, ty; /* placement image's left/right/bottom/top end coordintes */
   rect die;
   rect core; // COREAREA
+  adsRect core_; // work around for inappropriate doubles in class rect -cherry
 
   double minVddCoordiY; // VDD stripe coordinates for parsing
   power initial_power; // informations
@@ -302,7 +304,7 @@ class circuit {
   bool map_move(cell* theCell, int x, int y);
   std::vector< cell* > overlap_cells(cell* theCell);
   std::vector< cell* > get_cells_from_boundary(rect* theRect);
-  double dist_benefit(cell* theCell, int x_coord, int y_coord);
+  int dist_benefit(cell* theCell, int x_coord, int y_coord);
   bool swap_cell(cell* cellA, cell* cellB);
   bool refine_move(cell* theCell, std::string mode);
   bool refine_move(cell* theCell, int x_coord, int y_coord);

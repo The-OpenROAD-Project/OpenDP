@@ -73,7 +73,7 @@ void circuit::fixed_cell_assign() {
       x_end = min(x_end, x_end_rf);
 
 #ifdef DEBUG
-      cout << "FixedCellAssign: cell_name : " << theCell->name << endl;
+      cout << "FixedCellAssign: cell_name : " << theCell->db_inst->getConstName() << endl;
       cout << "FixedCellAssign: y_start : " << y_start << endl;
       cout << "FixedCellAssign: y_end   : " << y_end << endl;
       cout << "FixedCellAssign: x_start : " << x_start << endl;
@@ -415,8 +415,10 @@ bool circuit::paint_pixel(cell* theCell, int x_pos, int y_pos) {
   theCell->y_coord = y_pos * rowHeight;
   theCell->isPlaced = true;
 #ifdef DEBUG
-  cout << "paint cell : " << theCell->name << endl;
-  cout << "group : " << theCell->group << endl;
+  if (strcmp(theCell->db_inst->getConstName(),"_318_") == 0)
+    printf("luse\n");
+  cout << "paint cell : " << theCell->db_inst->getConstName() << endl;
+  cout << "group : " << theCell->cell_group << endl;
   cout << "init_x_coord - init_y_coord : " << theCell->init_x_coord << " - "
        << theCell->init_y_coord << endl;
   cout << "x_coord - y_coord : " << theCell->x_coord << " - "

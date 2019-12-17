@@ -52,6 +52,7 @@ using odb::dbITerm;
 using odb::dbMPin;
 using odb::dbPlacementStatus;
 
+using std::abs;
 using std::max;
 using std::min;
 using std::pair;
@@ -1038,10 +1039,10 @@ vector< cell* > circuit::get_cells_from_boundary(rect* theRect) {
   return list;
 }
 
-double circuit::dist_benefit(cell* theCell, int x_coord, int y_coord) {
-  double curr_dist = abs(theCell->x_coord - theCell->init_x_coord) +
+int circuit::dist_benefit(cell* theCell, int x_coord, int y_coord) {
+  int curr_dist = abs(theCell->x_coord - theCell->init_x_coord) +
                      abs(theCell->y_coord - theCell->init_y_coord);
-  double new_dist = abs(theCell->init_x_coord - x_coord) +
+  int new_dist = abs(theCell->init_x_coord - x_coord) +
                     abs(theCell->init_y_coord - y_coord);
   return new_dist - curr_dist;
 }
@@ -1054,7 +1055,7 @@ bool circuit::swap_cell(cell* cellA, cell* cellB) {
   else if(isFixed(cellA) || isFixed(cellB))
     return false;
 
-  double benefit = dist_benefit(cellA, cellB->x_coord, cellB->y_coord) +
+  int benefit = dist_benefit(cellA, cellB->x_coord, cellB->y_coord) +
                    dist_benefit(cellB, cellA->x_coord, cellA->y_coord);
 
   if(benefit < 0) {
@@ -1104,7 +1105,7 @@ bool circuit::refine_move(cell* theCell, int x_coord, int y_coord) {
         abs(theCell->init_y_coord - myPixel.second->y_pos * rowHeight);
     if(new_dist / rowHeight > max_disp_const) return false;
 
-    double benefit = dist_benefit(theCell, myPixel.second->x_pos * wsite,
+    int benefit = dist_benefit(theCell, myPixel.second->x_pos * wsite,
                                   myPixel.second->y_pos * rowHeight);
     if(benefit < 0) {
       // cout << " refine benefit : " << benefit << " : " << 2001 -
