@@ -195,6 +195,7 @@ struct density_bin {
 
 class circuit {
  public:
+  void clear();
   bool GROUP_IGNORE;
 
   void init_large_cell_stor();

@@ -30,10 +30,10 @@ DieArea:
   multi cells              : 0
   fixed cells              : 4883
   total nets               : 33171
-  design area              : 4.40457e+11
+  design area              : 2.64807e+12
   total f_area             : 5.19551e+09
   total m_area             : 1.98942e+11
-  design util              : 45.7064
+  design util              : 7.5275
   num rows                 : 514
   row height               : 2800
 -------------------------------------------------------------------
