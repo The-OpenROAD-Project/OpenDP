@@ -1,14 +1,2 @@
-*~
-*.log
-*.swo
-*.swd
-*.swp
-*/**/*.o
-*.rpt
-*.rej
-test/*/exp
 test/results
 TAGS
-
-install_manifest.txt
-build
