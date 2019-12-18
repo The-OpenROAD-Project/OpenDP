@@ -149,9 +149,10 @@ void circuit::calc_design_area_stats() {
   }
   designArea = 0.0;
   for(vector< row >::iterator theRow = rows.begin(); theRow != rows.end();
-      ++theRow)
-    designArea += theRow->stepX * theRow->numSites
+      ++theRow) {
+    designArea += 1.0 * theRow->stepX * theRow->numSites
       * theRow->db_row->getSite()->getHeight();
+  }
 
   for(int i = 0; i < cells.size(); i++) {
     cell* theCell = &cells[i];
