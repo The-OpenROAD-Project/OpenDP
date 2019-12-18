@@ -37,9 +37,14 @@ static vector<opendp::row> GetNewRow(const circuit* ckt);
 static bool
 swapWidthHeight(dbOrientType orient );
 
+
 void
 circuit::db_to_circuit()
 {
+  // Clearing pre-built structure will enable 
+  // multiple execution of the legalize_placement command.
+  clear();
+
   // LEF
   DEFdist2Microns = db->getTech()->getDbUnitsPerMicron();
   for (auto db_lib : db->getLibs()) {

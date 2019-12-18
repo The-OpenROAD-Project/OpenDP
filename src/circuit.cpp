@@ -121,7 +121,26 @@ circuit::circuit()
 {
   rows.reserve(4096);
   sub_regions.reserve(100);
-};
+}
+
+void 
+circuit::clear()
+{
+  using std::vector;
+  // clear the pre-built structures.
+  if( macros.size() > 0 ) {
+    vector<macro> ().swap( macros );
+  }
+  if( rows.size() > 0 ) {
+    vector<row> ().swap( rows );
+  } 
+  if( prevrows.size() > 0 ) {
+    vector<row> ().swap( prevrows );
+  }
+  if( cells.size() > 0 ) {
+    vector<cell> ().swap(cells);
+  } 
+}
 
 int IntConvert(double fp) {
   return (int)std::round(fp);
