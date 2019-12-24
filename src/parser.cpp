@@ -194,7 +194,7 @@ void circuit::read_files(int argc, char* argv[]) {
   int site_offset = rows[0].origX;
 
   // construct pixel grid
-  int row_num = ty / rowHeight;
+  int row_num = round(ty / rowHeight);
   int col = rx / wsite;
   grid = new pixel*[row_num];
   for(int i = 0; i < row_num; i++) {
