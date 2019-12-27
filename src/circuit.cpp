@@ -65,7 +65,9 @@ bool
 circuit::isFixed(cell *cell1)
 {
   return cell1 == &dummy_cell
-    || cell1->db_inst->getPlacementStatus() == dbPlacementStatus::FIRM;
+    || cell1->db_inst->getPlacementStatus() == dbPlacementStatus::FIRM 
+    || cell1->db_inst->getPlacementStatus() == dbPlacementStatus::LOCKED
+    || cell1->db_inst->getPlacementStatus() == dbPlacementStatus::COVER;
 }
 
 pixel::pixel()
