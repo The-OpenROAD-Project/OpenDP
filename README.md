@@ -1,6 +1,8 @@
 # OpenDP
 *OpenDP: Open Source Detailed Placement Engine*
 
+If you want to use this as part of the OpenROAD project you should build it and use it from inside the integrated [openroad app](https://github.com/The-OpenROAD-Project/OpenROAD). The standalone version is available as legacy code.
+
 | <img src="/doc/image/OpenDP_sample.jpg" width=900px> | 
 |:--:| 
 | *Visualized detailed placement result using aes_cipher_top design with innovus initial placement; OpenDP_sample.jpg* |
